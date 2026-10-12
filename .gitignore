@@ -1,0 +1,7 @@
+# 本地验证与编辑器产生的临时文件
+.openchamber/
+*.log
+
+# 操作系统
+.DS_Store
+Thumbs.db

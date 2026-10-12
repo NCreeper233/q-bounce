@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>所有人保持Q弹</title>
+<link rel="icon" type="image/webp" href="img/bang.webp">
+<link rel="stylesheet" href="css/style.css?v=12">
+</head>
+<body>
+<div class="app">
+
+  <header class="masthead">
+    <div class="brand">
+      <p class="eyebrow">Q-BOUNCE <i>/</i> MOTION LAB</p>
+      <h1>所有人保持Q弹</h1>
+      <p class="brand-sub"><b>Q弹小人生成器</b><span>BOUNCE ANIMATION EXPORTER</span></p>
+    </div>
+    <div class="mast-side">
+      <p class="mast-meta"><i class="tick"></i>IN-BROWSER · 图不上传 · 即开即用</p>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section class="stage-wrap">
+      <div class="stage-head">
+        <span class="stage-title"><b>01</b><i class="sep">/</i>预览<span class="en">PREVIEW</span></span>
+        <span class="stage-hint">拖动移动 · 滚轮缩放<span class="en">DRAG / SCROLL</span></span>
+      </div>
+      <div class="stage-frame">
+        <canvas id="stage" width="960" height="600"></canvas>
+      </div>
+      <div class="stage-foot">
+        <span>方向键微调选中 <span class="key">↑</span><span class="key">↓</span><span class="key">←</span><span class="key">→</span><span class="key">×10</span><span class="en">SHIFT 加速</span></span>
+        <span>960 × 600 <i class="sep">/</i> Q-BOUNCE OS 1.0</span>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-col">
+
+      <section class="grp">
+        <h2 class="grp-title"><b>02</b><i class="sep">/</i>图像<span class="en">IMAGES</span></h2>
+        <div class="row">
+          <span class="lbl">背景图</span>
+          <button type="button" class="btn-ghost" id="btnPickBg">选择…</button>
+          <span class="fname" id="nameBg">未选择</span>
+        </div>
+        <div class="row">
+          <span class="lbl">主体图</span>
+          <button type="button" class="btn-ghost" id="btnPickSubj">选择…</button>
+          <button type="button" class="btn-ghost" id="btnDelSubj">删除</button>
+          <span class="fname" id="nameSubj">未选择</span>
+        </div>
+        <input type="file" id="fBg" accept="image/*" hidden>
+        <input type="file" id="fSubj" accept="image/*" multiple hidden>
+        <div class="row btn-row">
+          <button type="button" class="btn-ghost" id="btnSample">载入示例</button>
+          <button type="button" class="btn-ghost" id="btnClear">清空</button>
+        </div>
+        <div class="row">
+          <label class="chk"><input type="checkbox" id="shadowChk" checked><span>地面投影</span></label>
+          <span class="hint tight">按主体轮廓</span>
+        </div>
+        <p class="hint">拖到窗口里、Ctrl+V 粘贴也行。<br>主体图自带透明底最稳；可多选、多个一起弹，选中后点「删除」或按 <span class="key">Del</span>。</p>
+      </section>
+
+      <section class="grp">
+        <h2 class="grp-title"><b>03</b><i class="sep">/</i>摇法<span class="en">MOTION</span></h2>
+        <div class="row">
+          <span class="lbl">速度</span>
+          <input type="range" id="spSpeed" min="0.2" max="3" step="0.1" value="1">
+          <span class="rd" id="rdSpeed">1.0×</span>
+        </div>
+        <p class="hint tight"><span id="rdHz">130 BPM</span></p>
+        <div class="row">
+          <span class="lbl">幅度</span>
+          <input type="range" id="spAmp" min="0" max="100" step="1" value="50">
+          <span class="rd" id="rdAmp">50%</span>
+        </div>
+        <div class="row btn-row">
+          <button type="button" class="btn-ghost" id="btnPause">暂停</button>
+          <button type="button" class="btn-ghost" id="btnReset">复位</button>
+        </div>
+      </section>
+
+      </div>
+      <div class="panel-col">
+
+      <section class="grp">
+        <h2 class="grp-title"><b>04</b><i class="sep">/</i>大小<span class="en">SIZE</span></h2>
+        <div class="row">
+          <span class="lbl">主体</span>
+          <input type="range" id="spSubjSize" min="5" max="200" step="1" value="50">
+          <span class="rd" id="rdSubjSize">50%</span>
+        </div>
+        <div class="row">
+          <span class="lbl">背景</span>
+          <input type="range" id="spBgSize" min="20" max="400" step="1" value="100">
+          <span class="rd" id="rdBgSize">100%</span>
+        </div>
+        <p class="hint tight">画布上也能直接拖动换位置、滚轮缩放。</p>
+      </section>
+
+      <section class="grp">
+        <h2 class="grp-title"><b>05</b><i class="sep">/</i>立体<span class="en">3D SPIN</span></h2>
+        <div class="row">
+          <label class="chk"><input type="checkbox" id="spinChk"><span>3D 旋转</span></label>
+          <span class="hint tight">绕竖轴转</span>
+        </div>
+        <div class="row">
+          <span class="lbl">转速</span>
+          <input type="range" id="spSpin" min="0.1" max="2" step="0.1" value="0.5" aria-label="转速">
+          <span class="rd" id="rdSpin">0.5转/秒</span>
+        </div>
+        <div class="row">
+          <span class="lbl">厚度</span>
+          <input type="range" id="spThick" min="0" max="80" step="1" value="0" aria-label="厚度">
+          <span class="rd" id="rdThick">0px</span>
+        </div>
+        <p class="hint tight">厚度 0 也照转；拉出厚度，侧边是一圈取自图片边缘的杂色。</p>
+      </section>
+
+      </div>
+      <div class="panel-col">
+
+      <section class="grp">
+        <h2 class="grp-title"><b>06</b><i class="sep">/</i>导出<span class="en">EXPORT</span></h2>
+        <div class="row">
+          <span class="lbl">比例</span>
+          <div class="seg seg-ratio">
+            <label class="seg-item"><input type="radio" name="expRatio" value="1" checked><span>1:1</span></label>
+            <label class="seg-item"><input type="radio" name="expRatio" value="1.777778"><span>16:9</span></label>
+            <label class="seg-item"><input type="radio" name="expRatio" value="1.6"><span>16:10</span></label>
+            <label class="seg-item"><input type="radio" name="expRatio" value="1.333333"><span>4:3</span></label>
+            <label class="seg-item"><input type="radio" name="expRatio" value="0.75"><span>3:4</span></label>
+            <label class="seg-item"><input type="radio" name="expRatio" value="0.5625"><span>9:16</span></label>
+            <label class="seg-item"><input type="radio" name="expRatio" value="custom"><span>自定义</span></label>
+          </div>
+        </div>
+        <div class="row" id="ratioCustomRow" hidden>
+          <span class="lbl"></span>
+          <input type="number" id="expRatioW" class="num-in" min="1" max="99" step="1" value="4" aria-label="比例宽">
+          <span class="ratio-x">×</span>
+          <input type="number" id="expRatioH" class="num-in" min="1" max="99" step="1" value="5" aria-label="比例高">
+        </div>
+        <div class="row">
+          <span class="lbl">尺寸</span>
+          <div class="seg">
+            <label class="seg-item"><input type="radio" name="expSize" value="320"><span>320</span></label>
+            <label class="seg-item"><input type="radio" name="expSize" value="480" checked><span>480</span></label>
+            <label class="seg-item"><input type="radio" name="expSize" value="640"><span>640</span></label>
+          </div>
+        </div>
+        <div class="row">
+          <span class="lbl">帧率</span>
+          <select id="expFps">
+            <option value="12">12 FPS</option>
+            <option value="15" selected>15 FPS</option>
+            <option value="20">20 FPS</option>
+            <option value="30">30 FPS</option>
+          </select>
+        </div>
+        <div class="row">
+          <span class="lbl">底色</span>
+          <div class="seg">
+            <label class="seg-item"><input type="radio" name="bgMode" value="image" checked><span>背景图</span></label>
+            <label class="seg-item"><input type="radio" name="bgMode" value="color"><span>纯色</span></label>
+            <label class="seg-item"><input type="radio" name="bgMode" value="none"><span>透明</span></label>
+          </div>
+        </div>
+        <div class="row indent">
+          <input type="color" id="bgColorPick" value="#ffffff" aria-label="纯色底色">
+          <span class="hint tight">没背景图时按这个色兜底</span>
+        </div>
+        <div class="row">
+          <label class="chk"><input type="checkbox" id="ditherChk" checked><span>颜色抖动</span></label>
+          <span class="hint tight">渐变更顺</span>
+        </div>
+        <button type="button" id="btnExport" class="btn-primary"><span>导出 GIF</span><span class="btn-hint">EXPORT<i>↓</i></span></button>
+        <div class="progress" id="progressWrap" hidden><div class="progress-fill" id="progressFill"></div></div>
+      </section>
+
+      <div class="panel-foot">
+        <button type="button" class="btn-ghost" id="miAbout">关于这个工具</button>
+      </div>
+
+      </div>
+    </aside>
+  </main>
+
+  <footer class="statusbar">
+    <span class="status-left"><i class="dot"></i><span id="stLeft">就绪。放图进来。</span></span>
+    <button type="button" class="btn-audio" id="btnAudio">▶ 播放</button>
+    <span id="stRight">960 × 600</span>
+  </footer>
+
+</div>
+
+<div class="dialog-mask" id="dlgAbout" hidden>
+  <div class="dialog">
+    <div class="dialog-head"><span>Q-BOUNCE <i>/</i> ABOUT</span></div>
+    <div class="dialog-body">
+      <h3>关于这个工具</h3>
+      <p>所有人保持Q弹 · v1.0</p>
+      <p>图片全程在你浏览器里处理，不上传服务器，打开即用。</p>
+      <p class="credits">
+        音乐 <a href="https://www.bilibili.com/video/BV1hXbN6VEKV/" target="_blank" rel="noopener noreferrer">朋友的酒 · Bilibili</a><i class="sep">/</i>
+        主题 <a href="https://github.com/LBEILC/RhineLabUI" target="_blank" rel="noopener noreferrer">RhineLabUI · GitHub</a><i class="sep">/</i>
+        作者 <a href="https://space.bilibili.com/1143315127" target="_blank" rel="noopener noreferrer">主页 · Bilibili</a>
+      </p>
+      <div class="row btn-row end">
+        <button type="button" id="dlgOk" class="btn-primary slim"><span>确定</span><span class="btn-hint">OK</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/gif.js?v=3"></script>
+<script src="js/app.js?v=20"></script>
+</body>
+</html>
